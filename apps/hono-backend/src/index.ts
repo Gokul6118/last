@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { serve } from '@hono/node-server'
-
+import  {handle} from 'hono/vercel'
 
 type Todo = {
   id: Number
@@ -28,7 +28,7 @@ let todos: Todo[] = [
   }
 ]
 
-export const app = new Hono()
+const app = new Hono()
 
 
 app.use('*', logger())
@@ -115,12 +115,6 @@ if (todos.length === prevLength) {
 
   return c.json({ success: true, message: 'Todo deleted' })
  })
-const port = 4000
 
-serve({
-  fetch: app.fetch,
-  port,
-})
 
-console.log(`🚀 Todo API running on http://localhost:${port}`)
-
+export default handle(app)
