@@ -35,9 +35,7 @@ app.use('*', cors({
 }))
 
 
-app.options('*', (c) => {
-  return c.newResponse('OK', { status: 204 })
-})
+app.options('*', (c) => { return c.newResponse(null, { status: 204 }) })
 
 
 // Routes
