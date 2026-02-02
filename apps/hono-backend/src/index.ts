@@ -33,7 +33,7 @@ app.use('*', logger())
 
 
 app.use('*', cors({
-  origin: 'hhttps://last-my-app-sooty.vercel.app/work-trackers/work',
+  origin: 'htps://last-my-app-sooty.vercel.app',
   allowHeaders: ['Content-Type'],
   allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }))
