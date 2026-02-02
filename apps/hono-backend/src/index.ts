@@ -27,19 +27,14 @@ const app = new Hono()
 // Logging middleware
 app.use('*', logger())
 
-
 app.use('*', cors({
-  origin: ['*','https://last-my-app-sooty.vercel.app'], 
+  origin: 'https://last-my-app-sooty.vercel.app', // allow only your frontend
   allowHeaders: ['Content-Type'],
-  allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE','OPTIONS'],
+  allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }))
 
 
-app.options('*', (c) => {
-  return c.body(null, 204)
-})
-
-
+app.options('*', (c) => { return c.newResponse(null, { status: 204 }) })
 
 
 // Routes
