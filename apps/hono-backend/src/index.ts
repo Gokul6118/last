@@ -33,7 +33,7 @@ app.use('*', logger())
 
 
 app.use('*', cors({
-  origin: 'https://last-my-app-6dup.vercel.app',
+  origin: 'https://last-my-jeowg6nte-js-projects-041c408d.vercel.app',
   allowHeaders: ['Content-Type'],
   allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }))
