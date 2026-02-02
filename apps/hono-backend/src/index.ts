@@ -2,7 +2,6 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 
-import  {handle} from 'hono/vercel'
 
 type Todo = {
   id: Number
@@ -116,4 +115,4 @@ if (todos.length === prevLength) {
  })
 
 
-export default handle(app)
+export default app
