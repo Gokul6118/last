@@ -6,8 +6,8 @@ type Todo = {
   id: number
   text: string
   done: boolean
-  date: string      
-  endDate: string   
+  date: string
+  endDate: string
 }
 
 let ID_COUNTER = 1
@@ -15,33 +15,36 @@ let ID_COUNTER = 1
 let todos: Todo[] = [
   {
     id: ID_COUNTER++,
-    text: "hlo",
+    text: 'hlo',
     done: false,
-    date: "2-2-2026",
-    endDate: "4-2-2026"
-  }
+    date: '2-2-2026',
+    endDate: '4-2-2026',
+  },
 ]
 
 const app = new Hono()
 
-// Logging middleware
+// ✅ Logger
 app.use('*', logger())
 
-app.use('*', cors({
-  origin: 'https://last-my-app-sooty.vercel.app', // allow only your frontend
-  allowHeaders: ['Content-Type'],
-  allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-}))
+// ✅ CORS (DO NOT add your own OPTIONS handler)
+app.use(
+  '*',
+  cors({
+    origin: 'https://last-my-app-sooty.vercel.app',
+    allowHeaders: ['Content-Type'],
+    allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  })
+)
 
+// ---------- ROUTES ----------
 
-app.options('*', (c) => { return c.newResponse(null, { status: 204 }) })
-
-
-// Routes
+// Get all todos
 app.get('/', (c) => {
   return c.json(todos)
 })
 
+// Create todo
 app.post('/todos', async (c) => {
   const body = await c.req.json()
 
@@ -58,11 +61,12 @@ app.post('/todos', async (c) => {
   return c.json({ success: true, data: newTodo }, 201)
 })
 
+// Replace todo
 app.put('/todos/:id', async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
-  
-  const index = todos.findIndex(t => String(t.id) === String(id))
+
+  const index = todos.findIndex((t) => String(t.id) === id)
 
   if (index === -1) {
     return c.json({ success: false, message: 'Todo not found' }, 404)
@@ -79,10 +83,12 @@ app.put('/todos/:id', async (c) => {
   return c.json({ success: true, data: todos[index] })
 })
 
+// Partial update
 app.patch('/todos/:id', async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
-  const todo = todos.find(t => String(t.id) === String(id))
+
+  const todo = todos.find((t) => String(t.id) === id)
 
   if (!todo) {
     return c.json({ success: false, message: 'Todo not found' }, 404)
@@ -96,10 +102,12 @@ app.patch('/todos/:id', async (c) => {
   return c.json({ success: true, data: todo })
 })
 
+// Delete todo
 app.delete('/todos/:id', (c) => {
   const id = c.req.param('id')
   const prevLength = todos.length
-  todos = todos.filter(t => String(t.id) !== String(id))
+
+  todos = todos.filter((t) => String(t.id) !== id)
 
   if (todos.length === prevLength) {
     return c.json({ success: false, message: 'Todo not found' }, 404)
