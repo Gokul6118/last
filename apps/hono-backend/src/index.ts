@@ -102,7 +102,7 @@ app.patch('/todos/:id', async (c) => {
   return c.json({ success: true, data: todo })
 })
 
-// Delete todo
+
 app.delete('/todos/:id', (c) => {
   const id = c.req.param('id')
   const prevLength = todos.length
