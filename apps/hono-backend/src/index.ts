@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-import {handle} from 'hono/vercel'
+
 type Todo = {
   id: number
   text: string
@@ -34,11 +34,7 @@ app.use(
     allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
 )
-// app.options('*', () => {
-//   return new Response(null, {
-//     status: 204,
-//   })
-// })
+
 app.get('/test', (c) => c.json({ ok: true }))
 
 
@@ -117,4 +113,4 @@ app.delete('/:id', (c) => {
   return c.json({ success: true, message: 'Todo deleted' })
 })
 
-export default handle(app)
+export default app

@@ -26,9 +26,6 @@ type Todo = {
 };
 
 
-
-
-
 const api = {
   getTodos: async (): Promise<Todo[]> => {
     const res = await fetch(`https://last-hono-backend-phi.vercel.app/`);
