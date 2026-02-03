@@ -1,0 +1,82 @@
+// src/index.ts
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
+var ID_COUNTER = 1;
+var todos = [
+  {
+    id: ID_COUNTER++,
+    text: "hlo",
+    done: false,
+    date: "2-2-2026",
+    endDate: "4-2-2026"
+  }
+];
+var app = new Hono();
+app.use("*", logger());
+app.use(
+  cors({
+    origin: ["https://last-my-app-dun.vercel.app"],
+    allowHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
+    allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    credentials: false
+  })
+);
+app.get("/test", (c) => c.json({ ok: true }));
+app.get("/", (c) => {
+  return c.json(todos);
+});
+app.post("/", async (c) => {
+  const body = await c.req.json();
+  const newTodo = {
+    id: ID_COUNTER++,
+    text: body.text,
+    done: false,
+    date: body.date,
+    endDate: body.endDate
+  };
+  todos.push(newTodo);
+  return c.json({ success: true, data: newTodo }, 201);
+});
+app.put("/:id", async (c) => {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+  const index = todos.findIndex((t) => String(t.id) === id);
+  if (index === -1) {
+    return c.json({ success: false, message: "Todo not found" }, 404);
+  }
+  todos[index] = {
+    id: todos[index].id,
+    text: body.text,
+    done: body.done,
+    date: body.date,
+    endDate: body.endDate
+  };
+  return c.json({ success: true, data: todos[index] });
+});
+app.patch("/:id", async (c) => {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+  const todo = todos.find((t) => String(t.id) === id);
+  if (!todo) {
+    return c.json({ success: false, message: "Todo not found" }, 404);
+  }
+  if (body.text !== void 0) todo.text = body.text;
+  if (body.done !== void 0) todo.done = body.done;
+  if (body.date !== void 0) todo.date = body.date;
+  if (body.endDate !== void 0) todo.endDate = body.endDate;
+  return c.json({ success: true, data: todo });
+});
+app.delete("/:id", (c) => {
+  const id = c.req.param("id");
+  const prevLength = todos.length;
+  todos = todos.filter((t) => String(t.id) !== id);
+  if (todos.length === prevLength) {
+    return c.json({ success: false, message: "Todo not found" }, 404);
+  }
+  return c.json({ success: true, message: "Todo deleted" });
+});
+var index_default = app;
+export {
+  index_default as default
+};
