@@ -24,10 +24,8 @@ let todos: Todo[] = [
 
 const app = new Hono()
 
-// ✅ Logger
 app.use('*', logger())
 
-// ✅ CORS (DO NOT add your own OPTIONS handler)
 app.use(
   '*',
   cors({
@@ -37,9 +35,7 @@ app.use(
   })
 )
 
-// ---------- ROUTES ----------
 
-// Get all todos
 app.get('/', (c) => {
   return c.json(todos)
 })
@@ -61,7 +57,7 @@ app.post('/todos', async (c) => {
   return c.json({ success: true, data: newTodo }, 201)
 })
 
-// Replace todo
+
 app.put('/todos/:id', async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
