@@ -30,8 +30,9 @@ app.use(
   '*',
   cors({
     origin: ['https://last-my-app-dun.vercel.app'],
-    allowHeaders: ['Content-Type'],
+    allowHeaders: ['Content-Type','Authorization'],
     allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    credentials: false,
   })
 )
 
