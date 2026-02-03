@@ -39,6 +39,7 @@ app.options('*', () => {
     status: 204,
   })
 })
+app.get('/test', (c) => c.json({ ok: true }))
 
 
 app.get('/', (c) => {
