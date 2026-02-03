@@ -66,7 +66,6 @@ const api = {
 deleteTodo: async (id: number) => {
   const res = await fetch(`https://last-hono-backend-phi.vercel.app/${id}`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json" },
   })
   if (!res.ok) throw new Error("Failed to delete todo")
   return res.json()
