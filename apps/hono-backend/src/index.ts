@@ -29,7 +29,7 @@ app.use('*', logger())
 app.use(
   '*',
   cors({
-    origin: 'https://last-my-app-sooty.vercel.app',
+    origin: 'last-my-app-dun.vercel.app',
     allowHeaders: ['Content-Type'],
     allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
