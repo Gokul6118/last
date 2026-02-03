@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-import {handle} from 'hone/vercel'
+import {handle} from 'hono/vercel'
 type Todo = {
   id: number
   text: string
