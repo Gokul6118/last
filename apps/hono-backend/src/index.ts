@@ -40,8 +40,7 @@ app.get('/', (c) => {
   return c.json(todos)
 })
 
-// Create todo
-app.post('/todos', async (c) => {
+app.post('/', async (c) => {
   const body = await c.req.json()
 
   const newTodo: Todo = {
@@ -58,7 +57,7 @@ app.post('/todos', async (c) => {
 })
 
 
-app.put('/todos/:id', async (c) => {
+app.put('/:id', async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
 
@@ -79,8 +78,8 @@ app.put('/todos/:id', async (c) => {
   return c.json({ success: true, data: todos[index] })
 })
 
-// Partial update
-app.patch('/todos/:id', async (c) => {
+
+app.patch('/:id', async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
 
@@ -99,7 +98,7 @@ app.patch('/todos/:id', async (c) => {
 })
 
 
-app.delete('/todos/:id', (c) => {
+app.delete('/:id', (c) => {
   const id = c.req.param('id')
   const prevLength = todos.length
 
