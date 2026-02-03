@@ -34,6 +34,11 @@ app.use(
     allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
 )
+app.options('*', () => {
+  return new Response(null, {
+    status: 204,
+  })
+})
 
 
 app.get('/', (c) => {

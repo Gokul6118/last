@@ -66,12 +66,15 @@ const api = {
     return res.json();
   },
 
-  deleteTodo: async (id: number) => {
-    const res = await fetch(`https://last-hono-backend-phi.vercel.app/${id}`,
-    { method: "DELETE" });
-    if (!res.ok) throw new Error("Failed to delete todo");
-    return res.json();
-  },
+deleteTodo: async (id: number) => {
+  const res = await fetch(`https://last-hono-backend-phi.vercel.app/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  })
+  if (!res.ok) throw new Error("Failed to delete todo")
+  return res.json()
+}
+
 };
 
 export const Route = createFileRoute('/_Dashboard/work')({
